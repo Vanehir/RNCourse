@@ -1,5 +1,5 @@
 import {useCallback, useState} from "react";
-import {Button, StyleSheet, Text, TextInput, View} from "react-native";
+import {Button, StyleSheet, Text, TextInput, View, ScrollView} from "react-native";
 
 export default function Index() {
   const [enteredGoalText, setEnteredGoalText] = useState<string>('');
@@ -30,12 +30,14 @@ export default function Index() {
         />
       </View>
       <View style={styles.goalsContainer}>
-        {courseGoals.map((goal) => (
-          <Text
-            style={styles.goalItem}
-            key={goal}
-          >{goal}</Text>
-        ))}
+        <ScrollView>
+          {courseGoals.map((goal) => (
+            <Text
+              style={styles.goalItem}
+              key={goal}
+            >{goal}</Text>
+          ))}
+        </ScrollView>
       </View>
     </View>
   );
