@@ -1,5 +1,13 @@
 import {useCallback, useState} from "react";
-import {Button, StyleSheet, Text, TextInput, View, ScrollView} from "react-native";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  ScrollView,
+  FlatList, ListRenderItem,
+} from "react-native";
 
 export default function Index() {
   const [enteredGoalText, setEnteredGoalText] = useState<string>('');
@@ -13,6 +21,17 @@ export default function Index() {
     setCourseGoals((currentCourseGoals: Array<string>) =>
       [...currentCourseGoals, enteredGoalText]);
   }, [enteredGoalText])
+
+  // item MUST be called item, because it's a property of ListRenderItemInfo
+  const goalItem = useCallback<ListRenderItem<string>>(({item}) => {
+    return (
+      <Text
+        style={styles.goalItem}
+        key={item}
+      >{item}
+      </Text>
+    )
+  }, [])
 
   return (
     <View style={styles.appContainer}>
@@ -30,14 +49,9 @@ export default function Index() {
         />
       </View>
       <View style={styles.goalsContainer}>
-        <ScrollView>
-          {courseGoals.map((goal) => (
-            <Text
-              style={styles.goalItem}
-              key={goal}
-            >{goal}</Text>
-          ))}
-        </ScrollView>
+        <FlatList
+          data={courseGoals}
+          renderItem={goalItem}/>
       </View>
     </View>
   );
